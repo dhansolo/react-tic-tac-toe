@@ -1,8 +1,17 @@
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
 .square {
   border: 1px solid black;
   height: 100px;
   width: 100px;
-  display: inline-block;
-  margin: 5px;
+  float: left;
+  font-size: 90px;
   text-align: center;
+}
+
+.row {
+  clear: both;
 }
