@@ -2,16 +2,10 @@ import React from 'react';
 import './App.css';
 
 class Game extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      turn: 'X'
-    }
-  }
   render() {
     return (
       <div className="game">
-        <Board turn={this.state.turn}/>
+        <Board />
       </div>
     )
   }
@@ -21,30 +15,46 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      board: [
-        ['','',''],
-        ['','',''],
-        ['','','']
-      ]
+      board: Array(9).fill(null),
+      turn: 'X'
+    }
+  }
+  handleClick = (i) => {
+    const board = this.state.board.slice();
+    if(board[i] !== null) {
+      return;
+    }
+    if(this.state.turn === 'X') {
+      board[i] = 'X';
+      this.setState({
+        board: board,
+        turn: 'O'
+      });
+    } else {
+      board[i] = 'O';
+      this.setState({
+        board: board,
+        turn: 'X'
+      });
     }
   }
   render() {
     return (
       <div className="board">
         <div className="firstRow">
-          <Square />
-          <Square />
-          <Square />
+          <Square value={this.state.board[1]} onClick={() => this.handleClick(1)}/>
+          <Square value={this.state.board[2]} onClick={() => this.handleClick(2)}/>
+          <Square value={this.state.board[3]} onClick={() => this.handleClick(3)}/>
         </div>
         <div className="secondRow">
-          <Square />
-          <Square />
-          <Square />
+          <Square value={this.state.board[4]} onClick={() => this.handleClick(4)}/>
+          <Square value={this.state.board[5]} onClick={() => this.handleClick(5)}/>
+          <Square value={this.state.board[6]} onClick={() => this.handleClick(6)}/>
         </div>
         <div className="thirdRow">
-          <Square />
-          <Square />
-          <Square />
+          <Square value={this.state.board[7]} onClick={() => this.handleClick(7)}/>
+          <Square value={this.state.board[8]} onClick={() => this.handleClick(8)}/>
+          <Square value={this.state.board[9]} onClick={() => this.handleClick(9)}/>
         </div>
       </div>
     )
@@ -52,12 +62,11 @@ class Board extends React.Component {
 }
 
 class Square extends React.Component {
-  handleClick = (e) => {
-    console.log(e);
-  }
   render() {
     return (
-      <div className="square" onClick={this.handleClick}></div>
+      <div className="square" onClick={() => this.props.onClick()}>
+        {this.props.value}
+      </div>
     )
   }
 }
